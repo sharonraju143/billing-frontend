@@ -41,8 +41,16 @@ steps:
 #     appType: 'webAppLinux'
 #     appName: 'nodes1122'
 #     package: '$(System.DefaultWorkingDirectory)/build'
-
 #     runtimeStack: 'NODE|18-lts'
 #     startUpCommand: 'npm start'
 #   displayName: 'Deploy to Azure Web App'
 
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'appservice'
+    appType: 'webAppLinux'
+    WebAppName: 'nodes1122'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/build/'
+    RuntimeStack: 'NODE|18-lts'
+    StartupCommand: 'npm start'
