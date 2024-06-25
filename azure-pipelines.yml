@@ -19,7 +19,8 @@ steps:
 - task: CopyFiles@2
   inputs:
     contents: |
-      build/**
+      node_modules
+      package.json
     targetFolder: '$(build.artifactStagingDirectory)'
   displayName: 'Copy files to artifact staging directory'
 
