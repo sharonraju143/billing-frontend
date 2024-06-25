@@ -53,4 +53,4 @@ steps:
     WebAppName: 'nodes1122'
     packageForLinux: '$(System.DefaultWorkingDirectory)/build/'
     RuntimeStack: 'NODE|18-lts'
-    StartupCommand: 'npm start'
+    StartupCommand: 'pm2 serve /home/site/wwwroot --spa --no-daemon'
