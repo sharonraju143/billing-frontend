@@ -29,13 +29,20 @@ steps:
     pathToPublish: '$(build.artifactStagingDirectory)'
     artifactName: 'drop'
   displayName: 'Publish build artifacts'
-
-- task: AzureWebApp@1
+- task: Bash@3
   inputs:
-    azureSubscription: 'appservice'
-    appType: 'webAppLinux'
-    appName: 'nodes1122'
-    package: '$(System.DefaultWorkingDirectory)/build'
-    runtimeStack: 'NODE|18-lts'
-    startUpCommand: 'npm start'
-  displayName: 'Deploy to Azure Web App'
+    targetType: 'inline'
+    script: |
+      ls $(System.DefaultWorkingDirectory)/build
+      pwd
+# - task: AzureWebApp@1
+#   inputs:
+#     azureSubscription: 'appservice'
+#     appType: 'webAppLinux'
+#     appName: 'nodes1122'
+#     package: '$(System.DefaultWorkingDirectory)/build'
+
+#     runtimeStack: 'NODE|18-lts'
+#     startUpCommand: 'npm start'
+#   displayName: 'Deploy to Azure Web App'
+
