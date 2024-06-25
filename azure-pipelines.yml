@@ -19,38 +19,23 @@ steps:
 - task: CopyFiles@2
   inputs:
     contents: |
-      node_modules/**
-      package.json
+      build/**
     targetFolder: '$(build.artifactStagingDirectory)'
   displayName: 'Copy files to artifact staging directory'
 
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(build.artifactStagingDirectory)'
-    includeRootFolder: false
-    archiveType: 'zip'
-    archiveFile: '$(build.artifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
-  displayName: 'Archive files'
 
 - task: PublishBuildArtifacts@1
   inputs:
     pathToPublish: '$(build.artifactStagingDirectory)'
     artifactName: 'drop'
   displayName: 'Publish build artifacts'
-- task: Bash@3
-  inputs:
-    targetType: 'inline'
-    script: |
-      pwd $(build.artifactStagingDirectory)
-      ls $(build.artifactStagingDirectory)
 
-- task: AzureWebApp@1
-  inputs:
-    azureSubscription: 'appservice'
-    appType: 'webAppLinux'
-    appName: 'nodes1122'
-    package: '$(build.artifactStagingDirectory)/$(Build.BuildId).zip'
-    runtimeStack: 'NODE|18-lts'
-    startUpCommand: 'npm start'
-  displayName: 'Deploy to Azure Web App'
+# - task: AzureWebApp@1
+#   inputs:
+#     azureSubscription: 'appservice'
+#     appType: 'webAppLinux'
+#     appName: 'nodes1122'
+#     package: '$(build.artifactStagingDirectory)/$(Build.BuildId).zip'
+#     runtimeStack: 'NODE|18-lts'
+#     startUpCommand: 'npm start'
+#   displayName: 'Deploy to Azure Web App'
