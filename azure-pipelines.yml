@@ -19,7 +19,7 @@ steps:
 - task: CopyFiles@2
   inputs:
     contents: |
-      node_modules
+      node_modules/**
       package.json
     targetFolder: '$(build.artifactStagingDirectory)'
   displayName: 'Copy files to artifact staging directory'
@@ -52,5 +52,5 @@ steps:
     appName: 'nodes1122'
     package: '$(build.artifactStagingDirectory)/$(Build.BuildId).zip'
     runtimeStack: 'NODE|18-lts'
-    startUpCommand: 'cd build && npm start'
+    startUpCommand: 'npm start'
   displayName: 'Deploy to Azure Web App'
