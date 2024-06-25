@@ -41,7 +41,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      pwd 
+      pwd $(build.artifactStagingDirectory)
       ls
 
 - task: AzureWebApp@1
