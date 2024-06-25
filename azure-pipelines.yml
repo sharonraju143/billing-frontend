@@ -30,12 +30,12 @@ steps:
     artifactName: 'drop'
   displayName: 'Publish build artifacts'
 
-# - task: AzureWebApp@1
-#   inputs:
-#     azureSubscription: 'appservice'
-#     appType: 'webAppLinux'
-#     appName: 'nodes1122'
-#     package: '$(build.artifactStagingDirectory)/$(Build.BuildId).zip'
-#     runtimeStack: 'NODE|18-lts'
-#     startUpCommand: 'npm start'
-#   displayName: 'Deploy to Azure Web App'
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'appservice'
+    appType: 'webAppLinux'
+    appName: 'nodes1122'
+    package: '$(System.DefaultWorkingDirectory)/build'
+    runtimeStack: 'NODE|18-lts'
+    startUpCommand: 'npm start'
+  displayName: 'Deploy to Azure Web App'
