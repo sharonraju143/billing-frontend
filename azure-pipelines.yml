@@ -1,0 +1,50 @@
+trigger:
+- none
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '20.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    npm install -g @angular/cli
+    npm install
+    npm run build
+  displayName: 'npm install and build'
+
+- task: CopyFiles@2
+  inputs:
+    contents: |
+      build/**
+      package.json
+    targetFolder: '$(build.artifactStagingDirectory)'
+  displayName: 'Copy files to artifact staging directory'
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(build.artifactStagingDirectory)'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(build.artifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
+  displayName: 'Archive files'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathToPublish: '$(build.artifactStagingDirectory)'
+    artifactName: 'drop'
+  displayName: 'Publish build artifacts'
+
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'appservice'
+    appType: 'webAppLinux'
+    appName: 'nodes1122'
+    package: '$(build.artifactStagingDirectory)/$(Build.BuildId).zip'
+    runtimeStack: 'NODE|18-lts'
+    startUpCommand: 'npm start'
+  displayName: 'Deploy to Azure Web App'
