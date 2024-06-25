@@ -51,5 +51,5 @@ steps:
     appName: 'nodes1122'
     package: '$(build.artifactStagingDirectory)/$(Build.BuildId).zip'
     runtimeStack: 'NODE|18-lts'
-    startUpCommand: 'npm start'
+    startUpCommand: 'cd build && npm start'
   displayName: 'Deploy to Azure Web App'
